@@ -41,7 +41,7 @@ for i = 1:length(posX)
     end
 end
 
-figure;
-plot(posX)
+posX
+plot(length(posX), posX)
 
 
