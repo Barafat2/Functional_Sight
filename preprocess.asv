@@ -12,6 +12,7 @@ xMatrix = [];
 for i = 1:length(posX)
     if i ~= 1
         if isnan(posX(i))
+            
             count=count+1;
         else
             if count ~= 0
@@ -41,7 +42,7 @@ for i = 1:length(posX)
     end
 end
 
-posX
-plot(length(posX), posX)
+figure;
+plot(posX)
 
 
