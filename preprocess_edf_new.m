@@ -89,6 +89,22 @@ eyeMovementsX_R = find(dx >= 0.3);
 eyeMovementsY_L = find(dy <= -0.3);
 eyeMovementsY_R = find(dy >= 0.3);
 
+findXLeft = find(dx <= -0.3);
+diffXLeft = diff([diff(findXLeft)==1]);
+firstXLeft = findXLeft(diffXLeft>0);
+
+findXRight = find(dx >= 0.3);
+diffXRight = diff([diff(findXRight)==1]);
+firstXRight = findXRight(diffXRight>0);
+
+findYDown = find(dy <= -0.3);
+diffYDown = diff([diff(findYDown)==1]);
+firstYDown = findYDown(diffYDown>0);
+
+findYUp = find(dy >= 0.3);
+diffYUp = diff([diff(findYUp)==1]);
+firstYUp = findYUp(diffYUp>0);
+
 
 %% find size of eye movements
 [max_x,lmax_x] = islocalmax(x);
