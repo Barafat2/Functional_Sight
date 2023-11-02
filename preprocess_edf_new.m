@@ -77,7 +77,14 @@ plot(x,y); xlabel('x (mm)'); ylabel('y (mm)'); title('Eye Movement Trace');
 
 
 %% find individual eye movements
-ischange(x) 
+dx=diff(x);
+dy=diff(y);
+figure; plot(dx); xlabel('time (ms)'); ylabel('Slope of x')
+figure; plot(dy); xlabel('time (ms)'); ylabel('Slope of y')
+eyeMovementsX = find(dx >= 10)
+eyeMovementsY = find(dy >= 10)
+
 
 %% find size of eye movements
+
 
