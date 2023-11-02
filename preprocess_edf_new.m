@@ -42,7 +42,6 @@ end
 
 
 %% Pupil size filtering 
-
 pupil = edf1_part.pupilSize(250:end);
 pupil(pupil < 1000) = NaN;
 
@@ -83,13 +82,43 @@ plot(downX,downY); xlabel('x (mm)'); ylabel('y (mm)'); title('Eye Movement Trace
 %% find individual eye movements
 dx=diff(downX);
 dy=diff(downY);
-figure; plot(dx); xlabel('time (ms)'); ylabel('Slope of x')
-figure; plot(dy); xlabel('time (ms)'); ylabel('Slope of y')
-eyeMovementsX = find(dx >= 10);
-eyeMovementsY = find(dy >= 10);
+% figure; plot(dx); xlabel('time (ms)'); ylabel('Slope of x')
+% figure; plot(dy); xlabel('time (ms)'); ylabel('Slope of y')
+eyeMovementsX_L = find(dx <= -0.3);
+eyeMovementsX_R = find(dx >= 0.3);
+eyeMovementsY_L = find(dy <= -0.3);
+eyeMovementsY_R = find(dy >= 0.3);
 
 
 %% find size of eye movements
+[max_x,lmax_x] = islocalmax(x);
+[max_y,lmax_y] = islocalmax(y);
+[min_x,lmin_x] = islocalmin(x);
+[min_y,lmin_y] = islocalmin(y);
+
+index_x = find(max_x==1 | min_x==1);
+index_y = find(max_y==1 | min_y==1);
+
+for i= 2:length(index_x)-1
+    if     x(index_x(i)) > x(index_x(i+1))
+        eyeDegreesX_R(i) = x(index_x(i+1))-x(index_x(i));
+    elseif x(index_x(i)) < x(index_x(i+1))
+        eyeDegreesX_L(i)= x(index_x(i+1))-x(index_x(i));
+    end
+end 
+
+for i= 2:length(index_y)-1
+    if     x(index_y(i)) > x(index_y(i+1))
+        eyeDegreesY_T(i) = x(index_y(i+1))-x(index_y(i));
+    elseif x(index_y(i)) < x(index_y(i+1))
+        eyeDegreesY_B(i)= x(index_y(i+1))-x(index_y(i));
+    end
+end 
+
+
+
+
+
 
 
 
