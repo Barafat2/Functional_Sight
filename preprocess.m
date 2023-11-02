@@ -26,24 +26,31 @@ for i = 1:length(posX)
 end
 
 for i = 1:length(posX)
-    if i ~= 1
+    if i ~= 11
         if isnan(posX(i))
+            
+            
             %If it's in the first half of the blink
             if xCount/2 <= xMatrix(j)
-                posX(i) = posX(i-1);
+                posX(i) = posX(i-2);
                 %If its in the second half of the blink
+                xCount = xCount+1;
+            
+            
             elseif xCount/2 >= xMatrix(j)
                 %Find the value at the end of the NaNs
                 for k = i:length(posX)
                     if ~isnan(posX(k))
-                        xHigh = posX(k);
+                        xHigh = posX(k+2);
                     end
                 end
                 %Set second half to next number
                 posX(i) = xHigh;
-                xCount = 1;
+                xCount = xCount+1;
             end
+            
         end
+        j = j+1;
     end
 end
 
