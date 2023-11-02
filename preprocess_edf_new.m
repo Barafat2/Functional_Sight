@@ -52,19 +52,23 @@ pp = interp1(i1(inn),pupil(inn),'linear','pp');
 out = fnval(pp,linspace(i1(1),i1(end),1000));
 
 
+%% Downsize x and y to 60 movements per second
+downX = resample(x, 1000, 60);
+downY = resample(y, 1000, 60);
+
 %% figure
 f = figure('Name','Removing Blinks Eye movement'); f.Position=[10 10 1000 500];
 subplot(3,4,1)
 plot(edf1_part.posX); xlabel('time (ms)'); ylabel('x location'); title('Horizontal location - raw'); ylim([400 800]);
 
 subplot(3,4,2)
-plot(x); xlabel('time (ms)'); ylabel('x location'); title('Horizontal location - filtered'); ylim([400 800]);
+plot(downX); xlabel('time (ms)'); ylabel('x location'); title('Horizontal location - filtered'); ylim([400 800]);
 
 subplot(3,4,5)
 plot(edf1_part.posY); xlabel('time (ms)'); ylabel('y location'); title('Vertical location - raw'); ylim([0 1000]);
 
 subplot(3,4,6)
-plot(y); xlabel('time (ms)'); ylabel('y location'); title('Vertical location - filtered'); ylim([0 1000]);
+plot(downY); xlabel('time (ms)'); ylabel('y location'); title('Vertical location - filtered'); ylim([0 1000]);
 
 subplot(3,4,9); 
 plot(edf1_part.pupilSize); xlabel('time (ms)'); ylabel('pupil size'); title('Pupil dilation - raw'); ylim([500 3000]);
@@ -73,18 +77,20 @@ subplot(3,4,10);
 plot(out); xlabel('time (ms)'); ylabel('pupil size'); title('Pupil dilation - filteres'); ylim([500 3000]);
 
 subplot(3,4,[3 4 7 8 11 12])
-plot(x,y); xlabel('x (mm)'); ylabel('y (mm)'); title('Eye Movement Trace');
+plot(downX,downY); xlabel('x (mm)'); ylabel('y (mm)'); title('Eye Movement Trace');
 
 
 %% find individual eye movements
-dx=diff(x);
-dy=diff(y);
+dx=diff(downX);
+dy=diff(downY);
 figure; plot(dx); xlabel('time (ms)'); ylabel('Slope of x')
 figure; plot(dy); xlabel('time (ms)'); ylabel('Slope of y')
-eyeMovementsX = find(dx >= 10)
-eyeMovementsY = find(dy >= 10)
+eyeMovementsX = find(dx >= 10);
+eyeMovementsY = find(dy >= 10);
 
 
 %% find size of eye movements
+
+
 
 
